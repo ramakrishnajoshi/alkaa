@@ -24,9 +24,14 @@ android {
         abortOnError true
         htmlReport true
         checkDependencies true
+        checkGeneratedSources = true
 
         lintConfig file("${rootDir}/config/filters/lint.xml")
         htmlOutput file("${buildDir}/reports/lint.html")
+    }
+
+    viewBinding {
+        enabled = true
     }
 
     dynamicFeatures = [":features:tracker"]
