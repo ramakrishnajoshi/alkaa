@@ -55,6 +55,9 @@ dependencies {
     implementation Deps.android.ktx
     implementation Deps.android.lifecycle.viewmodel
     implementation Deps.android.playCore
+    implementation Deps.android.material
+    implementation Deps.android.navigation.fragment
+    implementation Deps.android.navigation.ui
 
     implementation Deps.timber
 

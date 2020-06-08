@@ -2,4 +2,6 @@
 
     <!-- Suppress `UnusedResources` due to some bug on Dynamic Features tags -->
     <string name="dynamic_feature_title_tracker" translatable="false" tools:ignore="UnusedResources">Task Tracker</string>
+
+    <string name="menu_item_tasks">Tasks</string>
 </resources>

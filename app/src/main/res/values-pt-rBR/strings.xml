@@ -1,1 +1,3 @@
-<resources />
+<resources >
+    <string name="menu_item_tasks">Tarefas</string>
+</resources>
