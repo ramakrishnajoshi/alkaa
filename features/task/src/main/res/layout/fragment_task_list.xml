@@ -7,6 +7,7 @@
     tools:context=".presentation.list.TaskListFragment">
 
     <TextView
+        android:id="@+id/text_tasklist_title"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="center"

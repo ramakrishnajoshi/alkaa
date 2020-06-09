@@ -41,6 +41,8 @@ object Versions {
     const val testJunitExt = "1.1.0"
     const val testRoom = "2.1.0"
     const val testArch = "2.1.0"
+    const val barista = "3.5.0"
+    const val robolectric = "4.3.1"
 
     const val buildGradle = "3.6.0"
 
@@ -117,6 +119,8 @@ object TestDeps {
     val room = "androidx.room:room-testing:${Versions.testRoom}"
     val arch = "androidx.arch.core:core-testing:${Versions.testArch}"
     val lifecycle = "androidx.arch.core:core-testing:${Versions.testArch}"
+    val barista = "com.schibsted.spain:barista:${Versions.barista}"
+    val robolectric = "org.robolectric:robolectric:${Versions.robolectric}"
     val espresso = EspressoDeps
 }
 

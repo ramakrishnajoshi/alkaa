@@ -30,6 +30,12 @@ android {
         htmlOutput file("${buildDir}/reports/lint.html")
     }
 
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
+
     viewBinding {
         enabled = true
     }
@@ -60,6 +66,9 @@ dependencies {
     implementation Deps.android.navigation.ui
 
     implementation Deps.timber
-
     implementation Deps.koin.viewModel
+
+    testImplementation Deps.test.barista
+    testImplementation Deps.test.core
+    testImplementation Deps.test.robolectric
 }
