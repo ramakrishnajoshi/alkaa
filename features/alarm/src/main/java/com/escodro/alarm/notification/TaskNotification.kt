@@ -68,8 +68,8 @@ internal class TaskNotification(
         arguments.putLong(ARGUMENT_TASK, task.id)
 
         return NavDeepLinkBuilder(context)
-            .setGraph(R.navigation.nav_graph)
-            .setDestination(R.id.taskDetailFragment)
+            .setGraph(R.navigation.nav_graph_main)
+            .setDestination(R.id.fragment_task_list)
             .setArguments(arguments)
             .createPendingIntent()
     }

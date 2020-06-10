@@ -3,14 +3,9 @@ package com.escodro.alarm
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import com.escodro.domain.usecase.alarm.RescheduleFutureAlarms
-import com.escodro.domain.usecase.alarm.ShowAlarm
-import com.escodro.domain.usecase.alarm.SnoozeAlarm
-import com.escodro.domain.usecase.task.CompleteTask
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.koin.core.KoinComponent
-import org.koin.core.inject
 import timber.log.Timber
 
 /**
@@ -18,13 +13,16 @@ import timber.log.Timber
  */
 internal class TaskReceiver : BroadcastReceiver(), KoinComponent {
 
-    private val completeTaskUseCase: CompleteTask by inject()
+    // TODO code commented due to Koin x Robolectric issue
+    //  https://github.com/InsertKoinIO/koin/issues/503
 
-    private val showAlarmUseCase: ShowAlarm by inject()
-
-    private val snoozeAlarmUseCase: SnoozeAlarm by inject()
-
-    private val rescheduleUseCase: RescheduleFutureAlarms by inject()
+//    private val completeTaskUseCase: CompleteTask by inject()
+//
+//    private val showAlarmUseCase: ShowAlarm by inject()
+//
+//    private val snoozeAlarmUseCase: SnoozeAlarm by inject()
+//
+//    private val rescheduleUseCase: RescheduleFutureAlarms by inject()
 
     override fun onReceive(context: Context?, intent: Intent?) {
         Timber.d("onReceive() - intent ${intent?.action}")
@@ -36,14 +34,14 @@ internal class TaskReceiver : BroadcastReceiver(), KoinComponent {
 
     private suspend fun handleIntent(intent: Intent?) =
         when (intent?.action) {
-            ALARM_ACTION -> getTaskId(intent)?.let { showAlarmUseCase(it) }
-            COMPLETE_ACTION -> getTaskId(intent)?.let { completeTaskUseCase(it) }
-            SNOOZE_ACTION -> getTaskId(intent)?.let { snoozeAlarmUseCase(it) }
-            Intent.ACTION_BOOT_COMPLETED -> rescheduleUseCase()
+//            ALARM_ACTION -> getTaskId(intent)?.let { showAlarmUseCase(it) }
+//            COMPLETE_ACTION -> getTaskId(intent)?.let { completeTaskUseCase(it) }
+//            SNOOZE_ACTION -> getTaskId(intent)?.let { snoozeAlarmUseCase(it) }
+//            Intent.ACTION_BOOT_COMPLETED -> rescheduleUseCase()
             else -> Timber.e("Action not supported")
         }
 
-    private fun getTaskId(intent: Intent?) = intent?.getLongExtra(EXTRA_TASK, 0)
+//    private fun getTaskId(intent: Intent?) = intent?.getLongExtra(EXTRA_TASK, 0)
 
     companion object {
 
