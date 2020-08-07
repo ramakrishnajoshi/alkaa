@@ -15,8 +15,8 @@ internal class TaskAddItem(
     private val onInsertTask: (String) -> Unit
 ) : Item() {
 
-    override fun bind(viewHolder: GroupieViewHolder, position: Int) {
-        viewHolder.itemView.apply {
+    override fun bind(holder: GroupieViewHolder, position: Int) {
+        holder.itemView.apply {
             imageview_itemadd_completed.setOnClickListener { onAddClicked() }
             edittext_itemadd_description.onActionDone { text -> onInsertTask(text) }
         }

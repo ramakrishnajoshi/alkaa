@@ -1,5 +1,6 @@
 package com.escodro.task.presentation.list
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -9,14 +10,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.escodro.core.extension.createSnackbar
 import com.escodro.core.extension.hideKeyboard
 import com.escodro.core.extension.itemDialog
 import com.escodro.core.extension.items
 import com.escodro.core.extension.showKeyboard
-import com.escodro.core.extension.withDelay
 import com.escodro.core.viewmodel.ToolbarViewModel
 import com.escodro.task.R
 import com.escodro.task.model.TaskWithCategory
@@ -42,6 +42,8 @@ class TaskListFragment : Fragment() {
 
     private var navigator: NavController? = null
 
+    private var isLandscape: Boolean = false
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -57,7 +59,8 @@ class TaskListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         Timber.d("onViewCreated()")
 
-        bindComponents()
+        isLandscape = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+        updateRecyclerView()
         navigator = NavHostFragment.findNavController(this)
     }
 
@@ -71,7 +74,15 @@ class TaskListFragment : Fragment() {
         loadTasks()
     }
 
-    private fun bindComponents() {
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        Timber.d("onConfigurationChanged()")
+
+        isLandscape = newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE
+        updateRecyclerView()
+    }
+
+    private fun updateRecyclerView() {
         Timber.d("bindComponents()")
 
         recyclerview_tasklist_list?.adapter = adapter
@@ -91,12 +102,14 @@ class TaskListFragment : Fragment() {
         sharedViewModel.updateTitle(taskName)
     }
 
-    private fun getLayoutManager() =
-        LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+    private fun getLayoutManager(): RecyclerView.LayoutManager {
+        val layoutSpan = if (isLandscape) LAYOUT_SPAN_LANDSCAPE else LAYOUT_SPAN_PORTRAIT
+        return GridLayoutManager(context, layoutSpan)
+    }
 
     private fun onInsertTask(description: String) {
         hideKeyboard()
-        withDelay(INSERT_DELAY) { viewModel.addTask(description) }
+        viewModel.addTask(description)
     }
 
     private fun onTaskLoaded(list: List<TaskWithCategory>, showAddButton: Boolean) {
@@ -171,7 +184,9 @@ class TaskListFragment : Fragment() {
 
     companion object {
 
-        private const val INSERT_DELAY = 200L
+        private const val LAYOUT_SPAN_PORTRAIT = 1
+
+        private const val LAYOUT_SPAN_LANDSCAPE = 2
 
         /**
          * Represent the extra to store the category name.
