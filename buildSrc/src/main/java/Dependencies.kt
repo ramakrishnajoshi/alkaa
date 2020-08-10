@@ -17,7 +17,7 @@ object Versions {
     const val ktx = "1.0.2"
     const val lifecycle = "2.2.0"
     const val room = "2.2.3"
-    const val navigation = "2.1.0"
+    const val navigation = "2.3.0"
     const val playCore = "1.6.1"
 
     const val coroutines = "1.3.3"
