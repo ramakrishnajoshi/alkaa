@@ -1,6 +1,8 @@
 package com.escodro.task.presentation.list
 
 import android.text.TextUtils
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.escodro.domain.usecase.task.AddTask
@@ -29,11 +31,14 @@ internal class TaskListViewModel(
     private val addTaskUseCase: AddTask,
     private val updateStatusUseCase: UpdateTaskStatus,
     private val deleteTaskUseCase: DeleteTask,
+    savedStateHandle: SavedStateHandle,
     private val taskMapper: TaskMapper,
     private val taskWithCategoryMapper: TaskWithCategoryMapper
 ) : ViewModel() {
 
     private var categoryId: Long? = null
+
+    val taskName: MutableLiveData<String> = savedStateHandle.getLiveData("taskName")
 
     /**
      * Load the tasks based on the given state.

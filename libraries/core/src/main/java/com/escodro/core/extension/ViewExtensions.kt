@@ -69,6 +69,27 @@ fun TextView.textChangedFlow(): Flow<String> {
 }
 
 /**
+ * Extension to observe text change updates from a [TextView].
+ *
+ * @param textChangeListener the listener to be notified with new text
+ */
+inline fun EditText.onTextChanged(crossinline textChangeListener: (String) -> Unit) {
+    addTextChangedListener(object : TextWatcher {
+        override fun afterTextChanged(editable: Editable) {
+            textChangeListener(editable.toString())
+        }
+
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            // Do nothing.
+        }
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            // Do nothing.
+        }
+    })
+}
+
+/**
  * Extension to get the [EditText] string text when the user presses the
  * [EditorInfo.IME_ACTION_DONE] in the keyboard.
  *

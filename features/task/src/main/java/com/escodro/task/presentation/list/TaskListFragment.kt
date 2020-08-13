@@ -26,7 +26,7 @@ import com.xwray.groupie.kotlinandroidextensions.Item
 import kotlinx.android.synthetic.main.fragment_task_list.*
 import kotlinx.android.synthetic.main.item_add_task.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.stateViewModel
 import timber.log.Timber
 
 /**
@@ -34,7 +34,7 @@ import timber.log.Timber
  */
 class TaskListFragment : Fragment() {
 
-    private val viewModel: TaskListViewModel by viewModel()
+    private val viewModel: TaskListViewModel by stateViewModel()
 
     private val adapter = GroupAdapter<GroupieViewHolder>()
 
@@ -82,6 +82,13 @@ class TaskListFragment : Fragment() {
         updateRecyclerView()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        Timber.d("onDestroy()")
+
+        adapter.clear()
+    }
+
     private fun updateRecyclerView() {
         Timber.d("bindComponents()")
 
@@ -120,7 +127,7 @@ class TaskListFragment : Fragment() {
             .toMutableList<Item>()
 
         if (showAddButton) {
-            items.add(TaskAddItem(::onAddClicked, ::onInsertTask))
+            items.add(TaskAddItem(::onAddClicked, ::onInsertTask, viewModel.taskName))
         }
 
         adapter.update(items)

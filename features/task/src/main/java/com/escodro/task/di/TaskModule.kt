@@ -1,5 +1,6 @@
 package com.escodro.task.di
 
+import androidx.lifecycle.SavedStateHandle
 import com.escodro.task.mapper.AlarmIntervalMapper
 import com.escodro.task.mapper.CategoryMapper
 import com.escodro.task.mapper.TaskMapper
@@ -20,7 +21,9 @@ val taskModule = module {
 
     single<TaskDetailProvider> { TaskDetailProviderImpl(get(), get()) }
 
-    viewModel { TaskListViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
+    viewModel { (handle: SavedStateHandle) ->
+        TaskListViewModel(get(), get(), get(), get(), get(), get(), handle, get(), get())
+    }
     viewModel { TaskDetailViewModel(get(), get(), get(), get()) }
     viewModel { TaskCategoryViewModel(get(), get(), get(), get(), get()) }
     viewModel { TaskAlarmViewModel(get(), get(), get(), get(), get()) }

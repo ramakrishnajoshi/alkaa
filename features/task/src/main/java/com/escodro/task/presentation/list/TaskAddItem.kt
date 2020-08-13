@@ -1,6 +1,8 @@
 package com.escodro.task.presentation.list
 
+import androidx.lifecycle.MutableLiveData
 import com.escodro.core.extension.onActionDone
+import com.escodro.core.extension.onTextChanged
 import com.escodro.task.R
 import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import com.xwray.groupie.kotlinandroidextensions.Item
@@ -12,13 +14,16 @@ import kotlinx.android.synthetic.main.item_add_task.view.*
  */
 internal class TaskAddItem(
     private val onAddClicked: () -> Unit,
-    private val onInsertTask: (String) -> Unit
+    private val onInsertTask: (String) -> Unit,
+    private val taskName: MutableLiveData<String>
 ) : Item() {
 
     override fun bind(holder: GroupieViewHolder, position: Int) {
         holder.itemView.apply {
-            imageview_itemadd_completed.setOnClickListener { onAddClicked() }
+            edittext_itemadd_description?.setText(taskName.value)
+            edittext_itemadd_description?.onTextChanged { taskName.value = it }
             edittext_itemadd_description.onActionDone { text -> onInsertTask(text) }
+            imageview_itemadd_completed.setOnClickListener { onAddClicked() }
         }
     }
 
