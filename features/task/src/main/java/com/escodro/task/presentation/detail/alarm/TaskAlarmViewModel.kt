@@ -1,5 +1,6 @@
 package com.escodro.task.presentation.detail.alarm
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,6 +9,7 @@ import com.escodro.domain.usecase.alarm.ScheduleAlarm
 import com.escodro.domain.usecase.alarm.UpdateTaskAsRepeating
 import com.escodro.task.mapper.AlarmIntervalMapper
 import com.escodro.task.model.AlarmInterval
+import com.escodro.task.model.Task
 import com.escodro.task.presentation.detail.TaskDetailProvider
 import java.util.Calendar
 import kotlinx.coroutines.launch
@@ -17,14 +19,15 @@ import timber.log.Timber
  * [ViewModel] responsible to provide information to Task Alarm layout.
  */
 internal class TaskAlarmViewModel(
-    taskProvider: TaskDetailProvider,
+    private val taskProvider: TaskDetailProvider,
     private val scheduleAlarmUseCase: ScheduleAlarm,
     private val cancelAlarmUseCase: CancelAlarm,
     private val scheduleRepeatingUseCase: UpdateTaskAsRepeating,
     private val alarmIntervalMapper: AlarmIntervalMapper
 ) : ViewModel() {
 
-    val taskData = taskProvider.taskData
+    val taskData: LiveData<Task>
+        get() = taskProvider.taskData
 
     val chipVisibility = MediatorLiveData<Boolean>()
 

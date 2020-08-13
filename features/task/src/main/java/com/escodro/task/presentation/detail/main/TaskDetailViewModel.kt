@@ -25,7 +25,8 @@ internal class TaskDetailViewModel(
     val state: LiveData<TaskDetailUIState> =
         Transformations.map(taskProvider.taskData) { mapToUIState(it) }
 
-    val taskData: LiveData<Task> = taskProvider.taskData
+    val taskData: LiveData<Task>
+        get() = taskProvider.taskData
 
     /**
      * Loads the Task to be handled by the [ViewModel]s.

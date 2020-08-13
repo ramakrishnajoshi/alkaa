@@ -1,5 +1,6 @@
 package com.escodro.task.presentation.detail.category
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.escodro.domain.usecase.category.LoadAllCategories
@@ -7,6 +8,7 @@ import com.escodro.domain.usecase.task.UpdateTask
 import com.escodro.task.mapper.CategoryMapper
 import com.escodro.task.mapper.TaskMapper
 import com.escodro.task.model.Category
+import com.escodro.task.model.Task
 import com.escodro.task.presentation.detail.TaskDetailProvider
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
@@ -17,14 +19,15 @@ import timber.log.Timber
  * [ViewModel] responsible to provide information to Task Category layout.
  */
 internal class TaskCategoryViewModel(
-    taskProvider: TaskDetailProvider,
+    private val taskProvider: TaskDetailProvider,
     private val loadAllCategoriesUseCase: LoadAllCategories,
     private val categoryMapper: CategoryMapper,
     private val updateTaskUseCase: UpdateTask,
     private val taskMapper: TaskMapper
 ) : ViewModel() {
 
-    val taskData = taskProvider.taskData
+    val taskData: LiveData<Task>
+        get() = taskProvider.taskData
 
     /**
      * Load all categories.
